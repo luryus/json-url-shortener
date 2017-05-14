@@ -1,7 +1,7 @@
 import * as fs from 'fs-extra';
 import * as url from 'url';
 
-const ShortUrlRegex = /^[-\w]+$/;
+const SHORT_URL_REGEX = /^[-\w]+$/;
 
 export interface SiteUrlMap {
     [short: string]: url.Url;
@@ -13,8 +13,8 @@ export class SiteReader {
 
     constructor(private readonly filename: string) {
         this.readUrlsFromJson();
-        fs.watch(filename, (event, filename) => {
-            if (event === 'change') {
+        fs.watch(filename, (e, fn) => {
+            if (e === 'change') {
                 this.readUrlsFromJson();
             }
         });
@@ -28,19 +28,21 @@ export class SiteReader {
         const urlJsonMap: { [s: string]: string } = await fs.readJson(this.filename);
         this._urlMap = {};
         for (const short in urlJsonMap) {
-            if (!ShortUrlRegex.test(short)) {
-                console.error(`Invalid short url "${short}"`);
-                continue;
-            }
+            if (!urlJsonMap.hasOwnProperty(short)) {
+                if (!SHORT_URL_REGEX.test(short)) {
+                    console.error(`Invalid short url "${short}"`);
+                    continue;
+                }
 
-            try {
-                const fullUrl = url.parse(urlJsonMap[short]);
-                this._urlMap[short] = fullUrl;
-            } catch (e) {
-                if (e instanceof TypeError) {
-                    console.error(`Invalid url for short "${short}: ${urlJsonMap[short]}"`, e);
-                } else {
-                    throw e;
+                try {
+                    const fullUrl = url.parse(urlJsonMap[short]);
+                    this._urlMap[short] = fullUrl;
+                } catch (e) {
+                    if (e instanceof TypeError) {
+                        console.error(`Invalid url for short "${short}: ${urlJsonMap[short]}"`, e);
+                    } else {
+                        throw e;
+                    }
                 }
             }
         }

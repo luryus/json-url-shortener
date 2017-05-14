@@ -1,11 +1,11 @@
-import * as http from 'http';
-import * as fs from 'fs-extra';
 import * as commander from 'commander';
-import { Url, parse, format } from 'url';
+import * as fs from 'fs-extra';
+import * as http from 'http';
+import { format, parse, Url} from 'url';
 
 import { SiteReader } from './site-reader';
 
-export const ShortUrlPathRegex = /^\/([-\w]+)\/?$/;
+export const SHORT_URL_PATH_REGEX = /^\/([-\w]+)\/?$/;
 
 class JsonUrlShorter {
 
@@ -20,7 +20,7 @@ class JsonUrlShorter {
             this.handleRequest(req, res);
             let logStr = `${req.method} ${req.url} ${res.statusCode}`;
             if (res.statusCode === 301) {
-                logStr += ` Location: ${res.getHeader("Location")}`;
+                logStr += ` Location: ${res.getHeader('Location')}`;
             }
             console.log(logStr);
         });
@@ -39,8 +39,8 @@ class JsonUrlShorter {
         if (request.url !== undefined) {
             const url = parse(request.url);
             if (url.pathname) {
-                const matches = url.pathname.match(ShortUrlPathRegex);
-                if (matches != null && matches.length == 2) {
+                const matches = url.pathname.match(SHORT_URL_PATH_REGEX);
+                if (matches !== null && matches.length === 2) {
                     const fullUrl = this.siteReader.urlMap[matches[1]];
                     this.redirectResponse(format(fullUrl), response);
                     return;
@@ -52,7 +52,7 @@ class JsonUrlShorter {
     }
 
     private redirectResponse(url: string, response: http.ServerResponse) {
-        response.setHeader("Location", url);
+        response.setHeader('Location', url);
         response.writeHead(301);
         response.end();
     }
@@ -68,13 +68,13 @@ class JsonUrlShorter {
     }
 }
 
-(async function main() : Promise<void> {
+(async function main(): Promise<void> {
     commander.version('0.0.1')
         .usage('[options] <json file>')
         .option('-p, --port <port>', 'HTTP port', parseInt, 4455)
         .parse(process.argv);
 
-    if (commander.args.length != 1) {
+    if (commander.args.length !== 1) {
         commander.help();
     }
 
@@ -82,11 +82,11 @@ class JsonUrlShorter {
     const inputFileStat = await fs.stat(filename);
 
     if (!inputFileStat.isFile()) {
-        console.error("Input file not valid");
+        console.error('Input file not valid');
         process.exit(1);
     }
 
-    const port = parseInt(commander.opts().port);
+    const port = parseInt(commander.opts().port, 10);
 
     console.log(`Starting server with json file ${filename} on 0.0.0.0:${port}`);
     const shorter = new JsonUrlShorter(filename, port);
