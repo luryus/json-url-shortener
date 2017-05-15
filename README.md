@@ -1,7 +1,6 @@
 json-url-shortener
 ================
-Json-url-shortener is a simple url shortener written in TypeScript and node, which
-reads the short urls from a json file.
+Json-url-shortener is a simple url shortener written in TypeScript and node. It reads the urls from a json file.
 
 Usage
 -----
