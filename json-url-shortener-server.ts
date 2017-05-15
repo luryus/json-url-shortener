@@ -4,7 +4,7 @@ import { SiteReader } from './site-reader';
 
 const SHORT_URL_PATH_REGEX = /^\/([-\w]+)\/?$/;
 
-export class JsonUrlShorterServer {
+export class JsonUrlShortenerServer {
 
     private readonly server: http.Server;
     private readonly siteReader: SiteReader;

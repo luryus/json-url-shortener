@@ -3,7 +3,7 @@ import * as fs from 'fs-extra';
 import * as http from 'http';
 import { format, parse, Url} from 'url';
 
-import { JsonUrlShorterServer } from './json-url-shorter-server';
+import { JsonUrlShortenerServer } from './json-url-shortener-server';
 import { SiteReader } from './site-reader';
 
 (async function main(): Promise<void> {
@@ -27,6 +27,6 @@ import { SiteReader } from './site-reader';
     const port = parseInt(commander.opts().port, 10);
 
     console.log(`Starting server with json file ${filename} on 0.0.0.0:${port}`);
-    const shorter = new JsonUrlShorterServer(filename, port);
-    shorter.start();
+    const shortener = new JsonUrlShortenerServer(filename, port);
+    shortener.start();
 })();

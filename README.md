@@ -1,6 +1,6 @@
-json-url-shorter
+json-url-shortener
 ================
-Json-url-shorter is a simple url shorter written in TypeScript and node, which
+Json-url-shortener is a simple url shortener written in TypeScript and node, which
 reads the short urls from a json file.
 
 Usage
@@ -28,6 +28,6 @@ Running with Docker
 The project includes a simple Dockerfile for running the app in a container.
 Start the server in a docker container with:
 ```sh
-docker build -t json-url-shorter:latest 
-docker run -p 80:4455 $(pwd)/sites.json:/usr/share/app-config/sites.json json-url-shorter
+docker build -t json-url-shortener:latest 
+docker run -p 80:4455 $(pwd)/sites.json:/usr/share/app-config/sites.json json-url-shortener
 ```
