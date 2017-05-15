@@ -28,7 +28,7 @@ export class SiteReader {
         const urlJsonMap: { [s: string]: string } = await fs.readJson(this.filename);
         this._urlMap = {};
         for (const short in urlJsonMap) {
-            if (!urlJsonMap.hasOwnProperty(short)) {
+            if (urlJsonMap.hasOwnProperty(short)) {
                 if (!SHORT_URL_REGEX.test(short)) {
                     console.error(`Invalid short url "${short}"`);
                     continue;
@@ -46,5 +46,9 @@ export class SiteReader {
                 }
             }
         }
+
+        console.log('Using short urls:');
+        console.log(Object.keys(this._urlMap)
+            .map((key: string) => `${key}: ${this._urlMap[key].href}`));
     }
 }
