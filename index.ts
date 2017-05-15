@@ -7,7 +7,7 @@ import { JsonUrlShorterServer } from './json-url-shorter-server';
 import { SiteReader } from './site-reader';
 
 (async function main(): Promise<void> {
-    commander.version('0.0.1')
+    commander.version('0.1.0')
         .usage('[options] <json file>')
         .option('-p, --port <port>', 'HTTP port', parseInt, 4455)
         .parse(process.argv);
