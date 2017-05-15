@@ -6,16 +6,16 @@ reads the short urls from a json file.
 Usage
 -----
 Build the typescript files:
-```
+```sh
 npm build
 ```
 Then run the app:
-```
+```sh
 npm start -p 4455 urls.json
 ```
 
 The url json file has the following format:
-```json
+```
 {
   "short_path": "http://full.url.com/hello",
   ...
