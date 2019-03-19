@@ -38,10 +38,13 @@ export class JsonUrlShortenerServer {
             if (url.pathname) {
                 const matches = url.pathname.match(SHORT_URL_PATH_REGEX);
                 if (matches !== null && matches.length === 2) {
-                    const fullUrl = this.siteReader.urlMap[matches[1]];
-                    if (fullUrl) {
-                        this.redirectResponse(format(fullUrl), response);
-                        return;
+                    const path = matches[1];
+                    if (this.siteReader.urlMap.hasOwnProperty(path)) {
+                        const fullUrl = this.siteReader.urlMap[matches[1]];
+                        if (fullUrl) {
+                            this.redirectResponse(format(fullUrl), response);
+                            return;
+                        }
                     }
                 }
             }

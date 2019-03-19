@@ -9,7 +9,7 @@ export interface SiteUrlMap {
 
 export class SiteReader {
 
-    private _urlMap: SiteUrlMap;
+    private _urlMap: SiteUrlMap = {};
 
     constructor(private readonly filename: string) {
         this.readUrlsFromJson();
